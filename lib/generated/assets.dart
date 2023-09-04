@@ -29,6 +29,7 @@ class Assets {
   static const String compareListCompareList = 'lib/Screen/CompareList/CompareList.dart';
   static const String customerSupportCustomerSupport = 'lib/Screen/CustomerSupport/Customer_Support.dart';
   static const String dashboardDashboard = 'lib/Screen/Dashboard/Dashboard.dart';
+  // static const String eShopMultiVendorCustomerFlutterProjectV2.6.0AssetsEShop = 'assets/eShop.db';
   static const String exploreSectionExplore = 'lib/Screen/ExploreSection/explore.dart';
   static const String fAQsListFaqsList = 'lib/Screen/FAQsList/FaqsList.dart';
   static const String fAQsProductFaqsProduct = 'lib/Screen/FAQsProduct/FaqsProduct.dart';
@@ -91,12 +92,13 @@ class Assets {
   static const String pngPromo = 'assets/images/png/promo.png';
   static const String pngSheet = 'assets/images/png/sheet.png';
   static const String pngSliderph = 'assets/images/png/sliderph.png';
+  static const String pngSplashlogopng = 'assets/images/png/splashlogopng.png';
   static const String pngVideo = 'assets/images/png/video.png';
   static const String pngZip = 'assets/images/png/zip.png';
   static const String privacyPolicyPrivacyPolicy = 'lib/Screen/PrivacyPolicy/Privacy_Policy.dart';
   static const String productDetailProductDetail = 'lib/Screen/Product Detail/productDetail.dart';
- // static const String productList&SectionViewProductList = 'lib/Screen/ProductList&SectionView/ProductList.dart';
- // static const String productList&SectionViewSectionList = 'lib/Screen/ProductList&SectionView/SectionList.dart';
+  // static const String productList&SectionViewProductList = 'lib/Screen/ProductList&SectionView/ProductList.dart';
+  // static const String productList&SectionViewSectionList = 'lib/Screen/ProductList&SectionView/SectionList.dart';
   static const String productPreviewProductPreview = 'lib/Screen/ProductPreview/productPreview.dart';
   static const String profileMyProfile = 'lib/Screen/Profile/MyProfile.dart';
   static const String promoCodePromoCode = 'lib/Screen/PromoCode/PromoCode.dart';
@@ -198,7 +200,7 @@ class Assets {
   static const String svgGuarantee = 'assets/images/svg/guarantee.svg';
   static const String svgHome = 'assets/images/svg/home.svg';
   static const String svgHomelogo = 'assets/images/svg/homelogo.svg';
-  static const String svgHomelogo1 = 'assets/images/svg/homelogo.svg';
+  static const String svgHomelogo11 = 'assets/images/svg/homelogo11.svg';
   static const String svgHomepageSearch = 'assets/images/svg/homepage_search.svg';
   static const String svgLoginlogo = 'assets/images/svg/loginlogo.svg';
   static const String svgMidtrans = 'assets/images/svg/midtrans.svg';

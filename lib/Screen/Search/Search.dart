@@ -3,6 +3,7 @@ import 'package:eshop_multivendor/Helper/Color.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/Theme.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:eshop_multivendor/Screen/Dashboard/Dashboard.dart';
 import 'package:eshop_multivendor/widgets/desing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -230,7 +231,7 @@ class _SearchState extends State<Search> with TickerProviderStateMixin {
                 const Icon(Icons.arrow_back_ios_rounded, color: colors.primary),
             onPressed: () {
               Navigator.of(context).pop();
-            },
+              },
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.white,

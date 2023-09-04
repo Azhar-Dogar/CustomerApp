@@ -34,7 +34,6 @@ class DatabaseHelper {
       return _db;
     }
     _db = await initDb();
-
     return _db;
   }
 
@@ -307,17 +306,13 @@ class DatabaseHelper {
 
   getTotalCartCount(BuildContext context) async {
     final db1 = await db;
-
     List<Map> result = await db1!.query(DatabaseHelper._instance.CART_TABLE);
-
     context.read<UserProvider>().setCartCount(result.length.toString());
   }
 
   Future<List<Map>> getOffCart() async {
     final db1 = await db;
-
     List<Map> result = await db1!.query(DatabaseHelper._instance.CART_TABLE);
-
     return result;
   }
 
@@ -326,7 +321,6 @@ class DatabaseHelper {
 
     List<Map> result =
         await db1!.query(DatabaseHelper._instance.SAVEFORLATER_TABLE);
-
     return result;
   }
 

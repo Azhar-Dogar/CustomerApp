@@ -69,8 +69,7 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
     } else {
       context.read<FavoriteProvider>().changeStatus(FavStatus.inProgress);
       proIds = (await db.getFav())!;
-      context
-          .read<FavoriteProvider>()
+      context.read<FavoriteProvider>()
           .getOfflineFavorateProducts(context, setStateNow)
           .then(
         (value) {

@@ -577,8 +577,8 @@ class _SignUpPageState extends State<SignUp> with TickerProviderStateMixin {
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.only(top: 60),
-      child: SvgPicture.asset(
-        DesignConfiguration.setSvgPath('homelogo'),
+      child: Image.asset(
+        DesignConfiguration.setPngPath('splashlogopng'),
         alignment: Alignment.center,
         height: 90,
         width: 90,

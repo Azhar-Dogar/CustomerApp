@@ -26,7 +26,7 @@ class _SplashScreen extends State<Splash> with TickerProviderStateMixin {
   late AnimationController navigationContainerAnimationController =
       AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 200),
+    duration: const Duration(milliseconds: 9200),
   );
 
   @override
@@ -84,8 +84,8 @@ class _SplashScreen extends State<Splash> with TickerProviderStateMixin {
             height: double.infinity,
             decoration: DesignConfiguration.back(),
             child: Center(
-              child: SvgPicture.asset(
-                DesignConfiguration.setSvgPath('splashlogo'),
+              child: Image.asset(
+                DesignConfiguration.setPngPath('splashlogopng'),
                 width: 150,
                 height: 150,
               ),

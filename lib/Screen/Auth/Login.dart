@@ -8,6 +8,7 @@ import 'package:eshop_multivendor/Screen/Auth/SendOtp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -822,7 +823,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
   }
 
   Widget orDivider() {
-    if (googleLogin == true || (Platform.isIOS ? appleLogin == true : false)) {
+    if (googleLogin == true || ((!kIsWeb && Platform.isIOS) ? appleLogin == true : false)) {
       return Padding(
         padding: const EdgeInsets.only(top: 20),
         child: Row(
@@ -855,7 +856,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
   }
 
   Widget termAndPolicyTxt() {
-    if (googleLogin == true || (Platform.isIOS ? appleLogin == true : false)) {
+    if (googleLogin == true || (!kIsWeb &&Platform.isIOS ? appleLogin == true : false)) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 0.0, left: 25.0, right: 25.0),
         child: Column(
@@ -999,7 +1000,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
                   },
                 ),
               if (appleLogin == true)
-                if (Platform.isIOS)
+                if (!kIsWeb &&Platform.isIOS)
                   Padding(
                     padding: const EdgeInsets.only(top: 25),
                     child: InkWell(
@@ -1185,7 +1186,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
   }
 
   Widget bottomDivider() {
-    if (googleLogin == true || (Platform.isIOS ? appleLogin == true : false)) {
+    if (googleLogin == true || (!kIsWeb &&Platform.isIOS ? appleLogin == true : false)) {
       return Padding(
         padding: const EdgeInsets.only(top: 20.0),
         child: Divider(
@@ -1203,8 +1204,8 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.only(top: 60),
-      child: SvgPicture.asset(
-        DesignConfiguration.setSvgPath('homelogo'),
+      child: Image.asset(
+        DesignConfiguration.setPngPath('splashlogopng'),
         alignment: Alignment.center,
         height: 90,
         width: 90,

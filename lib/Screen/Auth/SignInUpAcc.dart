@@ -25,8 +25,8 @@ class _SignInUpAccState extends State<SignInUpAcc> {
   _subLogo() {
     return Padding(
       padding: EdgeInsetsDirectional.only(top: deviceHeight! * 0.15),
-      child: SvgPicture.asset(
-        DesignConfiguration.setSvgPath('homelogo'),
+      child: Image.asset(
+        DesignConfiguration.setPngPath('splashlogopng'),
         height: 90,
         width: 90,
         fit: BoxFit.contain,

@@ -58,7 +58,6 @@ class _DashboardPageState extends State<Dashboard>
   void initState() {
     SystemChromeSettings.setSystemButtomNavigationBarithTopAndButtom();
     SystemChromeSettings.setSystemUIOverlayStyleWithNoSpecification();
-    print("start");
     initDynamicLinks();
     _tabController = TabController(
       length: 5,
@@ -114,10 +113,8 @@ class _DashboardPageState extends State<Dashboard>
   }
 
   void initDynamicLinks() async {
-    print("dynamic");
     streamSubscription = FirebaseDynamicLinks.instance.onLink.listen(
       (event) {
-        print("dynamic links");
         final Uri deepLink = event.link;
         if (deepLink.queryParameters.isNotEmpty) {
           int index = int.parse(deepLink.queryParameters['index']!);
@@ -135,7 +132,6 @@ class _DashboardPageState extends State<Dashboard>
   }
 
   Future<void> getProduct(String id, int index, int secPos, bool list) async {
-    print("products");
     isNetworkAvail = await isNetworkAvailable();
     if (isNetworkAvail) {
       try {
@@ -146,9 +142,6 @@ class _DashboardPageState extends State<Dashboard>
         Response response =
             await post(getProductApi, headers: headers, body: parameter)
                 .timeout(const Duration(seconds: timeOut));
-         print("these are products");
-         print(response.statusCode);
-         print(response.body);
         var getdata = json.decode(response.body);
         bool error = getdata['error'];
         String msg = getdata['message'];
@@ -172,7 +165,9 @@ class _DashboardPageState extends State<Dashboard>
                 list: list,
               ),
             ),
-          );
+          ).catchError((error){
+            print(error);
+          });
         } else {
           if (msg != 'Products Not Found !') setSnackbar(msg, context);
         }
@@ -194,7 +189,9 @@ class _DashboardPageState extends State<Dashboard>
 
   @override
   Widget build(BuildContext context) {
+    deviceWidth = MediaQuery.of(context).size.width;
     return WillPopScope(
+
       onWillPop: () async {
         if (_tabController.index != 0) {
           _tabController.animateTo(0);
@@ -203,6 +200,7 @@ class _DashboardPageState extends State<Dashboard>
         return true;
       },
       child: Scaffold(
+
         extendBodyBehindAppBar: false,
         extendBody: true,
         backgroundColor: Theme.of(context).colorScheme.lightWhite,
@@ -271,8 +269,8 @@ class _DashboardPageState extends State<Dashboard>
       backgroundColor: Theme.of(context).colorScheme.lightWhite,
       title: /* _selBottom == 0
           ? */
-          SvgPicture.asset(
-        DesignConfiguration.setSvgPath('titleicon'),
+          Image.asset(
+        DesignConfiguration.setPngPath('splashlogopng'),
         height: 40,
       ),
       /* : Text(

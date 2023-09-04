@@ -97,6 +97,7 @@ class HomePageProvider extends ChangeNotifier {
         curve: Curves.easeIn,
       ),
     );
+
     notifyListeners();
   }
 

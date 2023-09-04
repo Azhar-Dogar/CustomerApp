@@ -74,5 +74,5 @@ const String bankDetail =
 //Api class instance
 ApiBaseHelper apiBaseHelper = ApiBaseHelper();
 
-const String baseUrl = 'https://devruptorsinc.co/';
-const String jwtKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+const String baseUrl = 'https://devruptorsinc.co/app/v1/api/';
+const String jwtKey = '20295d2ca3093e12a47123a04ccec6b33492fb01';

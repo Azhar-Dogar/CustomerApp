@@ -15,4 +15,5 @@ String getToken() {
 
 Map<String, String> get headers => {
         'Authorization': 'Bearer ${getToken()}',
+        'Access-Control-Allow-Origin' : 'devruptorsinc.co',
     };
