@@ -9,11 +9,10 @@ String getToken() {
   );
   String token = issueJwtHS256(claimSet, jwtKey);
 
-  print('token****$token');
   return token;
 }
 
 Map<String, String> get headers => {
         'Authorization': 'Bearer ${getToken()}',
-        'Access-Control-Allow-Origin' : 'devruptorsinc.co',
+        'Access-Control-Allow-Origin' : '*',
     };

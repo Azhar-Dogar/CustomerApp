@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 //this class use for connect with sql database and insert data and fetch data from database
 
@@ -40,11 +42,16 @@ class DatabaseHelper {
   //connect with sql database
   Future<Database> initDb() async {
     var databasesPath = await getDatabasesPath();
-    var path = join(databasesPath, 'eShop.db');
 
+    var path = join(databasesPath, 'eShop.db');
+    if (kIsWeb) {
+      // Change default factory on the web
+      databaseFactory = databaseFactoryFfiWeb;
+      path = 'my_web_web.db';
+    }
     // Check if the database exists
     var exists = await databaseExists(path);
-    if (!exists) {
+    if (!exists && !kIsWeb) {
       // Make sure the parent directory exists
       try {
         await Directory(dirname(path)).create(recursive: true);

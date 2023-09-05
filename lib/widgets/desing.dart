@@ -70,7 +70,7 @@ class DesignConfiguration {
 
   static String? getPriceFormat(BuildContext context, double price) {
     return NumberFormat.currency(
-      locale: Platform.localeName,
+      //locale: Platform.localeName,
       name: '$supportedLocale',
       symbol: '$CUR_CURRENCY',
       decimalDigits: int.parse(DECIMAL_POINTS ?? '0'),

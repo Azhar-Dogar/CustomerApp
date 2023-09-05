@@ -16,6 +16,7 @@ import 'package:eshop_multivendor/Screen/SplashScreen/Splash.dart';
 import 'package:eshop_multivendor/Screen/Language/languageSettings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +24,9 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
+// import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'Helper/String.dart';
 import 'Screen/Language/Demo_Localization.dart';
 import 'Screen/PushNotification/PushNotificationService.dart';
@@ -66,7 +70,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.instance.getInitialMessage();
+  // Initialize FFI
+  databaseFactory = kIsWeb ? databaseFactoryFfiWeb : databaseFactoryFfi;
+  sqfliteFfiInit();
   initializedDownload();
+
 
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
