@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
-//this class use for connect with sql database and insert data and fetch data from database
+//this class  use for connect with sql database and insert data and fetch data from database
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
