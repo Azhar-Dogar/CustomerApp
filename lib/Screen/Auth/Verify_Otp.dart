@@ -182,6 +182,8 @@ class _MobileOTPState extends State<VerifyOtp> with TickerProviderStateMixin {
   }
 
   Widget otpLayout() {
+    print("here is otp");
+    print(otp);
     return Padding(
       padding: const EdgeInsetsDirectional.only(top: 30),
       child: PinFieldAutoFill(

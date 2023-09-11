@@ -66,9 +66,13 @@ void main() async {
   // } else {
   //   await Firebase.initializeApp();
   // }
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
+
+    await Firebase.initializeApp(
+      name: "customer_app",
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
   FirebaseMessaging.instance.getInitialMessage();
   // Initialize FFI
   databaseFactory = kIsWeb ? databaseFactoryFfiWeb : databaseFactoryFfi;
