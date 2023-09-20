@@ -1004,7 +1004,7 @@ class _SearchState extends State<Explore> with TickerProviderStateMixin {
                               : Theme.of(context).colorScheme.fontColor,
                           fontSize: textFontSize16,
                           fontFamily: 'ubuntu',
-                        ),
+                        ),//comment
                       ),
                     ),
                     onTap: () {
