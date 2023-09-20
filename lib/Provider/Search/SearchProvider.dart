@@ -174,7 +174,7 @@ class SearchProvider extends ChangeNotifier {
   }
 
   Future<void> getMostLikePro(BuildContext context, Function updateNow) async {
-    List<String> proIds = [];
+    List proIds = [];
     proIds = (await db.getMostLike())!;
     if (proIds.isNotEmpty) {
       isNetworkAvail = await isNetworkAvailable();

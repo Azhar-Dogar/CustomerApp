@@ -21,9 +21,15 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -47,30 +53,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBAeEXmpn6SEagyL_ZHCehjLPlF_IU8yew',
-    appId: '1:358074586334:web:7d59e2d6d885a8458fde4f',
-    messagingSenderId: '358074586334',
-    projectId: 'eshop-c4ebf',
-    authDomain: 'eshop-c4ebf.firebaseapp.com',
-    storageBucket: 'eshop-c4ebf.appspot.com',
-    measurementId: 'G-WF8R2CEPBF',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDh6lJSUhBGRJyHSZFy4I_VH7V667Kkl5A',
-    appId: '1:358074586334:android:9924bd5ff73804b98fde4f',
-    messagingSenderId: '358074586334',
-    projectId: 'eshop-c4ebf',
-    storageBucket: 'eshop-c4ebf.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA4lEVmxvNH1L9bQtMz-TA11xtoOnz3kuI',
-    appId: '1:358074586334:ios:043391a378b074ce8fde4f',
-    messagingSenderId: '358074586334',
-    projectId: 'eshop-c4ebf',
-    storageBucket: 'eshop-c4ebf.appspot.com',
-    iosClientId: '358074586334-mh577ombiqv00igb17hjsgfas3j41lnl.apps.googleusercontent.com',
-    iosBundleId: 'wrteam.eshop.multivendor',
+    apiKey: 'AIzaSyCO5Lir6G2rszPcsR-qwOhfk5vYLg_UrHU',
+    appId: '1:768995689619:web:7d7de41e011b951440b966',
+    messagingSenderId: '768995689619',
+    projectId: 'eshop-ecd09',
+    authDomain: 'eshop-ecd09.firebaseapp.com',
+    storageBucket: 'eshop-ecd09.appspot.com',
+    measurementId: 'G-YPCJE34CK1',
   );
 }

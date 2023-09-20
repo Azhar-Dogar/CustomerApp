@@ -872,7 +872,7 @@ class _SearchState extends State<Search> with TickerProviderStateMixin {
   }
 
   Future<void> getMostLikePro() async {
-    List<String> proIds = [];
+    List proIds = [];
     proIds = (await db.getMostLike())!;
     if (proIds.isNotEmpty) {
       isNetworkAvail = await isNetworkAvailable();

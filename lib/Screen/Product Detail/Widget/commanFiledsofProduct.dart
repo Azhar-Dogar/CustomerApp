@@ -97,47 +97,53 @@ class GetPrice extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              '${DesignConfiguration.getPriceFormat(context, price)!} ',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.blue,
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.normal,
-                    fontSize: textFontSize20,
-                  ),
+            Flexible(
+              child: Text(
+                '${DesignConfiguration.getPriceFormat(context, price)!} ',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.blue,
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.normal,
+                      fontSize: textFontSize20,
+                    ),
+              ),
             ),
             const SizedBox(width: 10),
             off != 0.00
-                ? Text(
-                    '${DesignConfiguration.getPriceFormat(context, double.parse(model!.prVarientList![pos].price!))!} ',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          decoration: TextDecoration.lineThrough,
-                          decorationColor: colors.darkColor3,
-                          decorationStyle: TextDecorationStyle.solid,
-                          decorationThickness: 2,
-                          letterSpacing: 0,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .fontColor
-                              .withOpacity(0.7),
-                          fontStyle: FontStyle.normal,
-                          fontSize: textFontSize18,
-                          fontWeight: FontWeight.w300,
-                        ),
-                  )
+                ? Flexible(
+                  child: Text(
+                      '${DesignConfiguration.getPriceFormat(context, double.parse(model!.prVarientList![pos].price!))!} ',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor: colors.darkColor3,
+                            decorationStyle: TextDecorationStyle.solid,
+                            decorationThickness: 2,
+                            letterSpacing: 0,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .fontColor
+                                .withOpacity(0.7),
+                            fontStyle: FontStyle.normal,
+                            fontSize: textFontSize18,
+                            fontWeight: FontWeight.w300,
+                          ),
+                    ),
+                )
                 : const SizedBox(),
             const SizedBox(width: 10),
             off != 0.00
-                ? Text(
-                    ' ${off.toStringAsFixed(2)}% OFF',
-                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          color: colors.primary,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: textFontSize18,
-                        ),
-                  )
+                ? Flexible(
+                  child: Text(
+                      ' ${off.toStringAsFixed(2)}% OFF',
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            color: colors.primary,
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: textFontSize18,
+                          ),
+                    ),
+                )
                 : const SizedBox(),
             from
                 ? Selector<CartProvider, List<SectionModel>>(

@@ -106,7 +106,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
 
   bool? available, outOfStock;
   int? selectIndex = 0;
-  List<String> proIds1 = [];
+  List proIds1 = [];
   List<Product> mostFavProList = [];
   String query = '';
   Timer? _debounce;

@@ -59,20 +59,17 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // if (Firebase.apps.isNotEmpty) {
-  //   await Firebase.initializeApp(
-  //     options: DefaultFirebaseOptions.currentPlatform,
-  //   );
-  // } else {
-  //   await Firebase.initializeApp();
-  // }
-
-
     await Firebase.initializeApp(
-      name: "customer_app",
+      // name: "customer_app",
       options: DefaultFirebaseOptions.currentPlatform,
     );
-
+  if (Firebase.apps.isNotEmpty) {
+    print("Initialized");
+  }
+  else {
+    print("Not initialized");
+    // await Firebase.initializeApp();
+  }
   FirebaseMessaging.instance.getInitialMessage();
   // Initialize FFI
   databaseFactory = kIsWeb ? databaseFactoryFfiWeb : databaseFactoryFfi;

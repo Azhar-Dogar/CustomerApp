@@ -25,7 +25,7 @@ class StateFav extends State<Favorite> with TickerProviderStateMixin {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   ScrollController controller = ScrollController();
-  List<String>? proIds;
+  List? proIds;
   var db = DatabaseHelper();
   bool isLoadingMore = false;
 

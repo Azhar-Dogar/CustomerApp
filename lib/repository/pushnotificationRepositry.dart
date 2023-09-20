@@ -12,7 +12,7 @@ class NotificationRepository {
         updateFcmApi,
         parameter,
       );
-      print(responseData.statusCode);
+      // print(responseData.statusCode);
       return responseData;
     } on Exception catch (e) {
       throw ApiException('$errorMesaage${e.toString()}');

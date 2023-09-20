@@ -96,7 +96,7 @@ class FavoriteProvider extends ChangeNotifier {
     Function update,
   ) async {
     if (CUR_USERID == null || CUR_USERID == '') {
-      List<String>? proIds = (await db.getFav())!;
+      List<String>? proIds = (await db.getFav())!.cast<String>();
       if (proIds.isNotEmpty) {
         isNetworkAvail = await isNetworkAvailable();
 

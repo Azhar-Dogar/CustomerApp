@@ -78,6 +78,7 @@ class ProductMoreDetail extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsetsDirectional.only(start: 5.0),
                         child: Text(
+                          // "sada",
                           model.attributeList![i].value!,
                           textAlign: TextAlign.start,
                           style: Theme.of(context)

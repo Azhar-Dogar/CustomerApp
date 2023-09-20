@@ -4,6 +4,7 @@ import 'package:eshop_multivendor/Screen/StripeService/Stripe_Service.dart';
 import 'package:eshop_multivendor/Provider/CartProvider.dart';
 import 'package:eshop_multivendor/repository/paymentMethodRepository.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:provider/provider.dart';
 import '../Helper/String.dart';
@@ -20,7 +21,8 @@ class PaymentProvider extends ChangeNotifier {
   List<RadioModel> timeModelList = [];
   String? allowDay;
   List<String> paymentIconList = [
-    Platform.isIOS ? 'applepay' : 'gpay',
+    // Platform.isIOS ? 'applepay' : 'gpay',
+    if (kIsWeb) 'gpay' else if (Platform.isIOS) 'applepay' else 'gpay',
     'cod_payment',
     'paypal',
     'payu',

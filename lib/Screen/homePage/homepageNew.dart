@@ -291,7 +291,7 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _getOffFav() async {
     if (CUR_USERID == null || CUR_USERID == '') {
-      List<String>? proIds = (await db.getFav())!;
+      List? proIds = (await db.getFav())!;
       if (proIds.isNotEmpty) {
         isNetworkAvail = await isNetworkAvailable();
 

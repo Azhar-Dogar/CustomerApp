@@ -17,8 +17,8 @@ import 'UserProvider.dart';
 
 class CartProvider extends ChangeNotifier {
   List<File> prescriptionImages = [];
-  List<String> productVariantIds = [];
-  List<String> productIds = [];
+  List productVariantIds = [];
+  List productIds = [];
   List<User> addressList = [];
   List<Promo> promoList = [];
   final List<TextEditingController> controller = [];
@@ -188,8 +188,9 @@ class CartProvider extends ChangeNotifier {
   Future getUserOfflineCart() async {
     if (CUR_USERID == null || CUR_USERID == '') {
       DatabaseHelper db = DatabaseHelper();
-      List<String>? proIds = (await db.getCart())!;
-
+      List? proIds = (await db.getCart())!;
+       print("these are cart items");
+       print(proIds);
       if (proIds.isNotEmpty) {
         try {
           var parameter = {'product_variant_ids': proIds.join(',')};

@@ -908,12 +908,14 @@ class _SearchState extends State<Explore> with TickerProviderStateMixin {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.only(
                           top: 19.0, bottom: 16.0),
-                      child: Text(
-                        getTranslated(context, 'SORT_BY')!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.fontColor,
-                          fontSize: textFontSize18,
-                          fontFamily: 'ubuntu',
+                      child: Flexible(
+                        child: Text(
+                          getTranslated(context, 'SORT_BY')!,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.fontColor,
+                            fontSize: textFontSize18,
+                            fontFamily: 'ubuntu',
+                          ),
                         ),
                       ),
                     ),

@@ -868,14 +868,16 @@ class _GridViewProductListWidgetState extends State<GridViewProductListWidget> {
                       ),
                       child: Row(
                         children: [
-                          Text(
-                            ' ${DesignConfiguration.getPriceFormat(context, price)!}',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.blue,
-                              fontSize: textFontSize14,
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.normal,
-                              fontFamily: 'ubuntu',
+                          Flexible(
+                            child: Text(
+                              ' ${DesignConfiguration.getPriceFormat(context, price)!}',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.blue,
+                                fontSize: textFontSize14,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: 'ubuntu',
+                              ),
                             ),
                           ),
                           Expanded(
@@ -886,33 +888,35 @@ class _GridViewProductListWidgetState extends State<GridViewProductListWidget> {
                               ),
                               child: Row(
                                 children: <Widget>[
-                                  Text(
-                                    double.parse(widget
-                                                .productList![widget.index!]
-                                                .prVarientList![0]
-                                                .disPrice!) !=
-                                            0
-                                        ? '${DesignConfiguration.getPriceFormat(context, double.parse(widget.productList![widget.index!].prVarientList![0].price!))}'
-                                        : '',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .lightBlack,
-                                          fontFamily: 'ubuntu',
-                                          decoration:
-                                              TextDecoration.lineThrough,
-                                          decorationColor: colors.darkColor3,
-                                          decorationStyle:
-                                              TextDecorationStyle.solid,
-                                          decorationThickness: 2,
-                                          letterSpacing: 0,
-                                          fontSize: textFontSize10,
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.normal,
-                                        ),
+                                  Flexible(
+                                    child: Text(
+                                      double.parse(widget
+                                                  .productList![widget.index!]
+                                                  .prVarientList![0]
+                                                  .disPrice!) !=
+                                              0
+                                          ? '${DesignConfiguration.getPriceFormat(context, double.parse(widget.productList![widget.index!].prVarientList![0].price!))}'
+                                          : '',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .lightBlack,
+                                            fontFamily: 'ubuntu',
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            decorationColor: colors.darkColor3,
+                                            decorationStyle:
+                                                TextDecorationStyle.solid,
+                                            decorationThickness: 2,
+                                            letterSpacing: 0,
+                                            fontSize: textFontSize10,
+                                            fontWeight: FontWeight.w400,
+                                            fontStyle: FontStyle.normal,
+                                          ),
+                                    ),
                                   ),
                                 ],
                               ),

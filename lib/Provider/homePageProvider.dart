@@ -37,9 +37,9 @@ class HomePageProvider extends ChangeNotifier {
   List<Widget> pages = [];
   List<Model> offerImagesList = [];
   List<Product> mostFavouriteProductList = [];
-  List<String> proIds = [];
+  List proIds = [];
   List<Product> mostLikeProductList = [];
-  List<String> proIds1 = [];
+  List proIds1 = [];
 
   get getCurrentBackPressTime => _currentBackPressTime;
 

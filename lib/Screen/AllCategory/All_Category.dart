@@ -418,26 +418,28 @@ class _AllCategoryState extends State<AllCategory>
                                                               ),
                                                             ),
                                                           ),
-                                                          Text(
-                                                            '${data[index].name!}\n',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            maxLines: 2,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall!
-                                                                .copyWith(
-                                                                  fontFamily:
-                                                                      'ubuntu',
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .colorScheme
-                                                                      .fontColor,
-                                                                ),
+                                                          Flexible(
+                                                            child: Text(
+                                                              '${data[index].name!}\n',
+                                                              textAlign: TextAlign
+                                                                  .center,
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .copyWith(
+                                                                    fontFamily:
+                                                                        'ubuntu',
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .colorScheme
+                                                                        .fontColor,
+                                                                  ),
+                                                            ),
                                                           )
                                                         ],
                                                       ),

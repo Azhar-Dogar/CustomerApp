@@ -133,13 +133,13 @@ class StateProfile extends State<MyProfile> with TickerProviderStateMixin {
       child: ListTile(
         trailing: const Icon(
           Icons.navigate_next,
-          color: colors.primary,
+          color: colors.red,
         ),
         leading: title == getTranslated(context, 'YOUR_PROM_CO')
             ? Image.asset(
                 DesignConfiguration.setPngPath(img),
-                height: 25,
-                width: 25,
+                // height: 25,
+                // width: 25,
                 color: colors.primary,
               )
             : SvgPicture.asset(

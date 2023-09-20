@@ -845,23 +845,29 @@ class StateProduct extends State<ProductList> with TickerProviderStateMixin {
                 padding: const EdgeInsetsDirectional.only(start: 20),
                 child: GestureDetector(
                   onTap: sortDialog,
-                  child: Row(
-                    children: [
-                      Text(
-                        getTranslated(context, 'SORT_BY')!,
-                        style: const TextStyle(
-                          color: colors.primary,
-                          fontWeight: FontWeight.w500,
-                          fontStyle: FontStyle.normal,
-                          fontSize: textFontSize12,
+                  child: Expanded(
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            getTranslated(context, 'SORT_BY')!,
+                            style: const TextStyle(
+                              color: colors.primary,
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FontStyle.normal,
+                              fontSize: textFontSize12,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
                         ),
-                        textAlign: TextAlign.start,
-                      ),
-                      const Icon(
-                        Icons.keyboard_arrow_down_sharp,
-                        size: 16,
-                      )
-                    ],
+                        Flexible(
+                          child: const Icon(
+                            Icons.keyboard_arrow_down_sharp,
+                            size: 16,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

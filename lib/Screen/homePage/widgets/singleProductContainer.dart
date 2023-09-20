@@ -35,6 +35,8 @@ class SingleProductContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(textFlex);
+    print("here is flex");
     var db = DatabaseHelper();
     if (length > index) {
       String? offPer;
@@ -85,44 +87,43 @@ class SingleProductContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: textFlex,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                            start: 10.0,
-                            top: 15,
-                          ),
-                          child: Text(
-                            productDetails.name!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(
-                                  fontFamily: 'ubuntu',
-                                  color:
-                                      Theme.of(context).colorScheme.fontColor,
-                                  /*color:
-                                      Theme.of(context).colorScheme.lightBlack,*/
-                                  //fontSize: textFontSize10,
-                                  fontWeight: FontWeight.w400,
-                                  fontStyle: FontStyle.normal,
-                                ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                          start: 10.0,
+                          top: 15,
                         ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                            start: 8.0,
-                            top: 5,
+                        child: Text(
+                         productDetails.name!,
+                         style: Theme.of(context)
+                             .textTheme
+                             .titleSmall!
+                             .copyWith(
+                               fontFamily: 'ubuntu',
+                               color:
+                                   Theme.of(context).colorScheme.fontColor,
+                               /*color:
+                                   Theme.of(context).colorScheme.lightBlack,*/
+                               //fontSize: textFontSize10,
+                               fontWeight: FontWeight.w400,
+                               fontStyle: FontStyle.normal,
+                             ),
+                         maxLines: 1,
+                         overflow: TextOverflow.ellipsis,
                           ),
-                          child: Row(
-                            children: [
-                              Text(
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                          start: 8.0,
+                          top: 5,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
                                 ' ${DesignConfiguration.getPriceFormat(context, price)!}',
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.blue,
@@ -132,153 +133,153 @@ class SingleProductContainer extends StatelessWidget {
                                   fontFamily: 'ubuntu',
                                 ),
                               ),
-                              showDiscountAtSameLine
-                                  ? Expanded(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.only(
-                                          start: 10.0,
-                                          top: 5,
-                                        ),
-                                        child: Row(
-                                          children: <Widget>[
+                            ),
+                            showDiscountAtSameLine
+                                ? Expanded(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.only(
+                                        start: 10.0,
+                                        top: 5,
+                                      ),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            double.parse(productDetails
+                                                        .prVarientList![0]
+                                                        .disPrice!) !=
+                                                    0
+                                                ? '${DesignConfiguration.getPriceFormat(context, double.parse(productDetails.prVarientList![0].price!))}'
+                                                : '',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!
+                                                .copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .lightBlack,
+                                                  fontFamily: 'ubuntu',
+                                                  decoration: TextDecoration
+                                                      .lineThrough,
+                                                  decorationColor:
+                                                      colors.darkColor3,
+                                                  decorationStyle:
+                                                      TextDecorationStyle
+                                                          .solid,
+                                                  decorationThickness: 2,
+                                                  letterSpacing: 0,
+                                                  fontSize: textFontSize10,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontStyle: FontStyle.normal,
+                                                ),
+                                          ),
+                                          if (double.parse(offPer).round() >
+                                              0)
                                             Text(
-                                              double.parse(productDetails
-                                                          .prVarientList![0]
-                                                          .disPrice!) !=
-                                                      0
-                                                  ? '${DesignConfiguration.getPriceFormat(context, double.parse(productDetails.prVarientList![0].price!))}'
-                                                  : '',
+                                              '  ${double.parse(offPer).round()}%',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelSmall!
                                                   .copyWith(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .lightBlack,
                                                     fontFamily: 'ubuntu',
-                                                    decoration: TextDecoration
-                                                        .lineThrough,
-                                                    decorationColor:
-                                                        colors.darkColor3,
-                                                    decorationStyle:
-                                                        TextDecorationStyle
-                                                            .solid,
-                                                    decorationThickness: 2,
+                                                    color: colors.primary,
                                                     letterSpacing: 0,
                                                     fontSize: textFontSize10,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight:
+                                                        FontWeight.w400,
+                                                    fontStyle:
+                                                        FontStyle.normal,
                                                   ),
                                             ),
-                                            if (double.parse(offPer).round() >
-                                                0)
-                                              Text(
-                                                '  ${double.parse(offPer).round()}%',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelSmall!
-                                                    .copyWith(
-                                                      fontFamily: 'ubuntu',
-                                                      color: colors.primary,
-                                                      letterSpacing: 0,
-                                                      fontSize: textFontSize10,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                    ),
-                                              ),
-                                          ],
-                                        ),
+                                        ],
                                       ),
-                                    )
-                                  : const SizedBox(),
-                            ],
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ],
+                        ),
+                      ),
+                      double.parse(productDetails
+                                      .prVarientList![0].disPrice!) !=
+                                  0 &&
+                              !showDiscountAtSameLine
+                          ? Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                start: 10.0,
+                                top: 5,
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  Text(
+                                    double.parse(productDetails
+                                                .prVarientList![0]
+                                                .disPrice!) !=
+                                            0
+                                        ? '${DesignConfiguration.getPriceFormat(context, double.parse(productDetails.prVarientList![0].price!))}'
+                                        : '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .lightBlack,
+                                          fontFamily: 'ubuntu',
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          decorationColor: colors.darkColor3,
+                                          decorationStyle:
+                                              TextDecorationStyle.solid,
+                                          decorationThickness: 2,
+                                          letterSpacing: 0,
+                                          fontSize: textFontSize10,
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.normal,
+                                        ),
+                                  ),
+                                  if (double.parse(offPer).round() > 0)
+                                    Flexible(
+                                      child: Text(
+                                        '   ${double.parse(offPer).round()}%',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .copyWith(
+                                              fontFamily: 'ubuntu',
+                                              color: colors.primary,
+                                              letterSpacing: 0,
+                                              fontSize: textFontSize10,
+                                              fontWeight: FontWeight.w400,
+                                              fontStyle: FontStyle.normal,
+                                            ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            )
+                          : const SizedBox(),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(
+                          start: 10.0,
+                          top: 5,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                            top: 5,
+                            bottom: 5,
+                          ),
+                          child: StarRating(
+                            totalRating: productDetails.rating!,
+                            noOfRatings: productDetails.noOfRating!,
+                            needToShowNoOfRatings: true,
                           ),
                         ),
-                        double.parse(productDetails
-                                        .prVarientList![0].disPrice!) !=
-                                    0 &&
-                                !showDiscountAtSameLine
-                            ? Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                  start: 10.0,
-                                  top: 5,
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      double.parse(productDetails
-                                                  .prVarientList![0]
-                                                  .disPrice!) !=
-                                              0
-                                          ? '${DesignConfiguration.getPriceFormat(context, double.parse(productDetails.prVarientList![0].price!))}'
-                                          : '',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall!
-                                          .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .lightBlack,
-                                            fontFamily: 'ubuntu',
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            decorationColor: colors.darkColor3,
-                                            decorationStyle:
-                                                TextDecorationStyle.solid,
-                                            decorationThickness: 2,
-                                            letterSpacing: 0,
-                                            fontSize: textFontSize10,
-                                            fontWeight: FontWeight.w400,
-                                            fontStyle: FontStyle.normal,
-                                          ),
-                                    ),
-                                    if (double.parse(offPer).round() > 0)
-                                      Flexible(
-                                        child: Text(
-                                          '   ${double.parse(offPer).round()}%',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!
-                                              .copyWith(
-                                                fontFamily: 'ubuntu',
-                                                color: colors.primary,
-                                                letterSpacing: 0,
-                                                fontSize: textFontSize10,
-                                                fontWeight: FontWeight.w400,
-                                                fontStyle: FontStyle.normal,
-                                              ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox(),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                            start: 10.0,
-                            top: 5,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                              top: 5,
-                              bottom: 5,
-                            ),
-                            child: StarRating(
-                              totalRating: productDetails.rating!,
-                              noOfRatings: productDetails.noOfRating!,
-                              needToShowNoOfRatings: true,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ],
               ),
