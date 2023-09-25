@@ -648,7 +648,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                       children: [
                         sliderList[index] != 'youtube'
                             ? DesignConfiguration.getCacheNotworkImage(
-                                boxFit: BoxFit.contain,
+                                boxFit: BoxFit.cover,
                                 context: context,
                                 heightvalue: constraints.maxHeight,
                                 widthvalue: constraints.maxWidth,

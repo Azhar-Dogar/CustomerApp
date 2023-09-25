@@ -141,6 +141,8 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
           (
             value,
           ) async {
+            print(value);
+            print("Value print");
             bool error = value['error'];
             String? errorMessage = value['message'];
             await buttonController!.reverse();
@@ -581,7 +583,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
           focusNode: monoFocus,
           textInputAction: TextInputAction.next,
           maxLength: 15,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          // inputFormatters: [FilteringTextInputFormatter.te],
           decoration: InputDecoration(
               counter: const SizedBox(),
               contentPadding: const EdgeInsets.symmetric(

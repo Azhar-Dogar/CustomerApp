@@ -7,9 +7,47 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:768995689619:android:7220f6fb37e3804040b966",
+        "android_client_info": {
+          "package_name": "com.deliveryboy.multivendor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5T1eGeplm2za9F74HE4rHsU3zketb4C4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:768995689619:android:78ef74fa2742a0cd40b966",
         "android_client_info": {
           "package_name": "eShop.multivendor.customer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5T1eGeplm2za9F74HE4rHsU3zketb4C4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768995689619:android:5ddd68078495c6d140b966",
+        "android_client_info": {
+          "package_name": "wrteam.seller.multivendor"
         }
       },
       "oauth_client": [],

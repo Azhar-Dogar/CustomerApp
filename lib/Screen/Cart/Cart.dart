@@ -339,8 +339,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           ? null
           : getSimpleAppBar(getTranslated(context, 'CART')!, context),
       body: isNetworkAvail
-          ? CUR_USERID != null
-              ? Stack(
+          ?
+      // CUR_USERID != null ?
+      Stack(
                   children: <Widget>[
                     _showContent(context),
                     Selector<CartProvider, bool>(
@@ -352,18 +353,18 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                     ),
                   ],
                 )
-              : Stack(
-                  children: <Widget>[
-                    _showContent1(context),
-                    Selector<CartProvider, bool>(
-                      builder: (context, data, child) {
-                        return DesignConfiguration.showCircularProgress(
-                            data, colors.primary);
-                      },
-                      selector: (_, provider) => provider.isProgress,
-                    ),
-                  ],
-                )
+              // : Stack(
+              //     children: <Widget>[
+              //       _showContent1(context),
+              //       Selector<CartProvider, bool>(
+              //         builder: (context, data, child) {
+              //           return DesignConfiguration.showCircularProgress(
+              //               data, colors.primary);
+              //         },
+              //         selector: (_, provider) => provider.isProgress,
+              //       ),
+              //     ],
+              //   )
           : NoInterNet(
               setStateNoInternate: setStateNoInternate,
               buttonSqueezeanimation: buttonSqueezeanimation,
