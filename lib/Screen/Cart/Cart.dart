@@ -6,6 +6,7 @@ import 'package:eshop_multivendor/Helper/Constant.dart';
 import 'package:eshop_multivendor/Provider/CartProvider.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:eshop_multivendor/Screen/Auth/Login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
@@ -1153,10 +1154,15 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                           ? getTranslated(context, 'VALI_PRO_CODE')
                           : getTranslated(context, 'PROCEED_CHECKOUT'),
                       onBtnSelected: () async {
+                        print("user id");
+                        print(CUR_USERID);
+                        if(CUR_USERID != "" && CUR_USERID != null){
                         if (context.read<CartProvider>().isPromoLen == false) {
                           if (context.read<CartProvider>().oriPrice > 0) {
                             FocusScope.of(context).unfocus();
                             if (isAvailable) {
+                              print("This is available");
+                              print(context.read<CartProvider>().totalPrice);
                               if (context.read<CartProvider>().totalPrice !=
                                   0) {
                                 checkout();
@@ -1191,7 +1197,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                             },
                           );
                         }
-                      },
+                      }else{
+                          Navigator.push(context, MaterialPageRoute(builder:(_)=>const Login()));
+                        }},
                     ),
                   ],
                 ),

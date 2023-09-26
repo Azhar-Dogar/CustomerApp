@@ -543,9 +543,9 @@ class DatabaseHelper {
 
   Future<List> getCart() async {
     final cartBox = await getBox(CART_BOX);
-    print(cartBox.keys.toList());
-    print("these are carts");
-    return cartBox.keys.toList();
+    print("these are cart items");
+    print(cartBox.values);
+    return cartBox.values.toList();
   }
 
   getTotalCartCount(BuildContext context) async {
@@ -555,7 +555,7 @@ class DatabaseHelper {
 
   Future<List> getOffCart() async {
     final cartBox = await getBox(CART_BOX);
-    return cartBox.keys.toList();
+    return cartBox.values.toList();
   }
 
   Future<List> getOffSaveLater() async {

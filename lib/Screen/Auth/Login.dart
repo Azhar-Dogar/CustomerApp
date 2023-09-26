@@ -182,6 +182,7 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
                   List cartOffList = await db.getOffCart();
                   if (singleSellerOrderSystem && cartOffList.isNotEmpty) {
                     forLoginPageSingleSellerSystem = true;
+                    print("Here is Off");
                     offSaveAdd().then(
                       (value) {
                         clearYouCartDialog();
@@ -445,9 +446,11 @@ class _LoginPageState extends State<Login> with TickerProviderStateMixin {
 
   Future<void> offCartAdd() async {
     List cartOffList = await db.getOffCart();
+    print(cartOffList);
+    print("this is list");
     if (cartOffList.isNotEmpty) {
       for (int i = 0; i < cartOffList.length; i++) {
-        addToCartCheckout(cartOffList[i]['VID'], cartOffList[i]['QTY']);
+        addToCartCheckout(cartOffList[i], cartOffList[i]);
       }
     }
   }

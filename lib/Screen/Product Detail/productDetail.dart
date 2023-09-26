@@ -647,14 +647,19 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
                     return Stack(
                       children: [
                         sliderList[index] != 'youtube'
-                            ? DesignConfiguration.getCacheNotworkImage(
-                                boxFit: BoxFit.cover,
-                                context: context,
-                                heightvalue: constraints.maxHeight,
-                                widthvalue: constraints.maxWidth,
-                                placeHolderSize: deviceWidth! * 1,
-                                imageurlString: sliderList[index]!,
-                              )
+                            ? Image(image: NetworkImage(sliderList[index]!),
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                          fit: BoxFit.cover,
+                        )
+                        // DesignConfiguration.getCacheNotworkImage(
+                        //         boxFit: BoxFit.cover,
+                        //         context: context,
+                        //         heightvalue: constraints.maxHeight,
+                        //         widthvalue: constraints.maxWidth,
+                        //         placeHolderSize: deviceWidth! * 1,
+                        //         imageurlString: sliderList[index]!,
+                        //       )
                             : playIcon()
                       ],
                     );
@@ -1492,7 +1497,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
     return SliverAppBar(
       systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Theme.of(context).colorScheme.white),
-      expandedHeight: MediaQuery.of(context).size.height * 0.40,
+      expandedHeight: MediaQuery.of(context).size.height * 0.70,
       floating: false,
       pinned: true,
       backgroundColor: Theme.of(context).colorScheme.white,
