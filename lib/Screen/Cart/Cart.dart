@@ -7,6 +7,7 @@ import 'package:eshop_multivendor/Provider/CartProvider.dart';
 import 'package:eshop_multivendor/Provider/SettingProvider.dart';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/Auth/Login.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
@@ -817,7 +818,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                                 context, 'TOTAL_PRICE')!,
                                           ),
                                           Text(
-                                            '${DesignConfiguration.getPriceFormat(context, context.read<CartProvider>().oriPrice)!} ',
+                                            '${DesignConfiguration.getPriceFormat(context, context.read<CartProvider>().oriPrice)!}',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleMedium!
@@ -866,6 +867,24 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
   }
 
   _showContent(BuildContext context) {
+    total = 0.0;
+    for(SectionModel cart in context
+        .read<CartProvider>()
+        .cartList){
+
+      int selectedPos = 0;
+      for (int i = 0;
+      i < cart.productList![0].prVarientList!.length;
+      i++) {
+        if (cart.varientId ==
+            cart.productList![0].prVarientList![i].id) selectedPos = i;
+      }
+      print(cart.productList![0].prVarientList![selectedPos]);
+      total += double.parse(cart.qty!) * double.parse(cart.productList![0].prVarientList![selectedPos].disPrice ?? "0");
+    }
+
+    print("------");
+    print(total);
     return _isCartLoad
         ? const ShimmerEffect()
         : context.read<CartProvider>().cartList.isEmpty &&
@@ -1127,7 +1146,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                     Text(
                                         getTranslated(context, 'TOTAL_PRICE')!),
                                     Text(
-                                      '${DesignConfiguration.getPriceFormat(context, context.read<CartProvider>().oriPrice)!} ',
+                                      '${DesignConfiguration.getPriceFormat(context, auth.FirebaseAuth.instance.currentUser == null ? total : context.read<CartProvider>().oriPrice)!} ',
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium!
@@ -2889,7 +2908,10 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     setSnackbar(response.message!, context);
   }
 
+
+  double total = 0.0;
   cartItems(List<SectionModel> cartList) {
+
     return ListView.builder(
       shrinkWrap: true,
       itemCount: cartList.length,
@@ -3111,283 +3133,4 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       },
     );
   }
-
-/*  Future<void> checkDeliverable(int from) async {
-    isNetworkAvail = await isNetworkAvailable();
-    if (isNetworkAvail) {
-      try {
-        context.read<CartProvider>().setProgress(true);
-
-        var parameter = {
-          USER_ID: CUR_USERID,
-          ADD_ID: context.read<CartProvider>().selAddress,
-        };
-        apiBaseHelper.postAPICall(checkCartDelApi, parameter).then((getdata) {
-          bool error = getdata["error"];
-          String? msg = getdata["message"];
-          List data = getdata["data"];
-          context.read<CartProvider>().setProgress(false);
-
-          if (error) {
-            context.read<CartProvider>().deliverableList =
-                (data).map((data) => Model.checkDeliverable(data)).toList();
-
-            context.read<CartProvider>().checkoutState!(() {
-              context.read<CartProvider>().deliverable = false;
-              _placeOrder = true;
-            });
-
-            setSnackbar(msg!, context);
-            context.read<CartProvider>().setProgress(false);
-          } else {
-            print("data****$data");
-            if (data.isEmpty) {
-              print("data inner");
-              setState(() {
-                context.read<CartProvider>().deliverable = true;
-              });
-              if (mounted) {
-                if (context.read<CartProvider>().checkoutState != null) {
-                  context.read<CartProvider>().checkoutState!(() {});
-                }
-              }
-            } else {
-              print("deliverable data*******$data");
-              bool isDeliverible = false;
-              bool? isShipRocket;
-              context.read<CartProvider>().deliverableList =
-                  (data).map((data) => Model.checkDeliverable(data)).toList();
-
-              for (int i = 0;
-                  i < context.read<CartProvider>().deliverableList.length;
-                  i++) {
-                print(
-                    "deliverable List****${context.read<CartProvider>().deliverableList[i].delBy}");
-                if (context.read<CartProvider>().deliverableList[i].isDel ==
-                    false) {
-                  isDeliverible = false;
-                  break;
-                } else {
-                  isDeliverible = true;
-                  if (context.read<CartProvider>().deliverableList[i].delBy ==
-                      "standard_shipping") {
-                    isShipRocket = true;
-                  }
-                }
-              }
-              print("isDeliverable*****$isDeliverible*******$isShipRocket");
-              if (isDeliverible) {
-                getShipRocketDeliveryCharge(
-                  shipRocket: isShipRocket != null && isShipRocket ? '1' : '0',
-                );
-              }
-            }
-            context.read<CartProvider>().setProgress(false);
-          }
-        }, onError: (error) {
-          setSnackbar(error.toString(), context);
-        });
-      } on TimeoutException catch (_) {
-        setSnackbar(getTranslated(context, 'somethingMSg')!, context);
-      }
-    } else {
-      if (mounted) {
-        setState(() {
-          isNetworkAvail = false;
-        });
-      }
-    }
-  }
-
-  Future<void> getShipRocketDeliveryCharge({required String shipRocket}) async {
-    isNetworkAvail = await isNetworkAvailable();
-    if (isNetworkAvail) {
-      if (context.read<CartProvider>().addressList.isNotEmpty) {
-        try {
-          context.read<CartProvider>().setProgress(true);
-
-          var parameter = {
-            USER_ID: CUR_USERID,
-            ADD_ID: context
-                .read<CartProvider>()
-                .addressList[context.read<CartProvider>().selectedAddress!]
-                .id,
-            ONLY_DEL_CHARGE: shipRocket,
-            DEL_PINCODE: context
-                .read<CartProvider>()
-                .addressList[context.read<CartProvider>().selectedAddress!]
-                .pincode
-            // SUB_TOTAL: oriPrice.toString()
-          };
-
-          CartRepository.fetchUserCart(parameter: parameter).then((getData) {
-            print("cart getdata****$getData");
-            bool error = getData['error'];
-            String? msg = getData['message'];
-            var data = getData['data'];
-
-            if (error) {
-              setSnackbar(msg.toString(), context);
-              context.read<CartProvider>().deliverable = false;
-            } else {
-              if (shipRocket == '1') {
-                context.read<CartProvider>().codDeliverChargesOfShipRocket =
-                    double.parse(data['delivery_charge_with_cod'].toString());
-
-                context.read<CartProvider>().prePaidDeliverChargesOfShipRocket =
-                    double.parse(
-                        data['delivery_charge_without_cod'].toString());
-                if (context.read<CartProvider>().codDeliverChargesOfShipRocket >
-                        0 &&
-                    context
-                            .read<CartProvider>()
-                            .prePaidDeliverChargesOfShipRocket >
-                        0) {
-                  context.read<CartProvider>().isLocalDelCharge = false;
-                } else {
-                  context.read<CartProvider>().isLocalDelCharge = true;
-                }
-
-                context.read<CartProvider>().shipRocketDeliverableDate =
-                    data['estimate_date'] ?? '';
-                if (context.read<CartProvider>().payMethod == '') {
-                  context.read<CartProvider>().deliveryCharge = context
-                      .read<CartProvider>()
-                      .codDeliverChargesOfShipRocket;
-                  if (context
-                          .read<CartProvider>()
-                          .isShippingDeliveryChargeApplied ==
-                      false) {
-                    context.read<CartProvider>().totalPrice =
-                        context.read<CartProvider>().deliveryCharge +
-                            context.read<CartProvider>().oriPrice;
-                    context
-                        .read<CartProvider>()
-                        .isShippingDeliveryChargeApplied = true;
-                  }
-                } else {
-                  if (context.read<CartProvider>().payMethod ==
-                      getTranslated(context, 'COD_LBL')) {
-                    context.read<CartProvider>().deliveryCharge = context
-                        .read<CartProvider>()
-                        .codDeliverChargesOfShipRocket;
-                    if (context
-                            .read<CartProvider>()
-                            .isShippingDeliveryChargeApplied ==
-                        false) {
-                      context.read<CartProvider>().totalPrice =
-                          context.read<CartProvider>().deliveryCharge +
-                              context.read<CartProvider>().oriPrice;
-                      context
-                          .read<CartProvider>()
-                          .isShippingDeliveryChargeApplied = true;
-                    }
-                  } else {
-                    context.read<CartProvider>().deliveryCharge = context
-                        .read<CartProvider>()
-                        .prePaidDeliverChargesOfShipRocket;
-                    if (context
-                            .read<CartProvider>()
-                            .isShippingDeliveryChargeApplied ==
-                        false) {
-                      context.read<CartProvider>().totalPrice =
-                          context.read<CartProvider>().deliveryCharge +
-                              context.read<CartProvider>().oriPrice;
-                      context
-                          .read<CartProvider>()
-                          .isShippingDeliveryChargeApplied = true;
-                    }
-                  }
-                }
-              } else {
-                context.read<CartProvider>().isLocalDelCharge = true;
-                context.read<CartProvider>().deliveryCharge =
-                    double.parse(getData[DEL_CHARGE]);
-                context.read<CartProvider>().totalPrice =
-                    context.read<CartProvider>().deliveryCharge +
-                        context.read<CartProvider>().oriPrice;
-              }
-              context.read<CartProvider>().deliverable = true;
-              // confirmDialog();
-            }
-            context.read<CartProvider>().setProgress(false);
-            setState(() {});
-
-            if (context.read<CartProvider>().checkoutState != null) {
-              context.read<CartProvider>().checkoutState!(() {});
-            }
-          }, onError: (error) {
-            setSnackbar(error.toString(), context);
-          });
-        } on TimeoutException catch (_) {
-          setSnackbar(
-              getTranslated(context, 'somethingMSg')!, context);
-        }
-      }
-    } else {
-      isNetworkAvail = false;
-      setState(() {});
-    }
-  }*/
-
-/*  Future<void> checkDeliverable() async {
-    isNetworkAvail = await isNetworkAvailable();
-    if (isNetworkAvail) {
-      try {
-        context.read<CartProvider>().setProgress(true);
-        var parameter = {
-          USER_ID: CUR_USERID,
-          ADD_ID: context.read<CartProvider>().selAddress,
-        };
-
-        apiBaseHelper.postAPICall(checkCartDelApi, parameter).then(
-          (getdata) {
-            bool error = getdata['error'];
-            String? msg = getdata['message'];
-            var data = getdata['data'];
-            context.read<CartProvider>().setProgress(false);
-
-            if (error) {
-              context.read<CartProvider>().deliverableList = (data as List)
-                  .map((data) => Model.checkDeliverable(data))
-                  .toList();
-
-              context.read<CartProvider>().checkoutState!(
-                () {
-                  context.read<CartProvider>().deliverable = false;
-                  _placeOrder = true;
-                },
-              );
-
-              setSnackbar(msg!, context);
-            } else {
-              context.read<CartProvider>().deliverableList = (data as List)
-                  .map((data) => Model.checkDeliverable(data))
-                  .toList();
-
-              context.read<CartProvider>().checkoutState!(
-                () {
-                  context.read<CartProvider>().deliverable = true;
-                },
-              );
-              confirmDialog();
-            }
-          },
-          onError: (error) {
-            setSnackbar(error.toString(), context);
-          },
-        );
-      } on TimeoutException catch (_) {
-        setSnackbar(getTranslated(context, 'somethingMSg')!, context);
-      }
-    } else {
-      if (mounted) {
-        setState(
-          () {
-            isNetworkAvail = false;
-          },
-        );
-      }
-    }
-  }*/
 }
