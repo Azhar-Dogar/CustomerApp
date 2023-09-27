@@ -67,8 +67,6 @@ class Cart extends StatefulWidget {
 //String? stripePayId;
 
 class StateCart extends State<Cart> with TickerProviderStateMixin {
-
-
   bool _isCartLoad = true,
       /*_placeOrder = true, */
       _isSaveLoad = true;
@@ -342,31 +340,31 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           : getSimpleAppBar(getTranslated(context, 'CART')!, context),
       body: isNetworkAvail
           ?
-      // CUR_USERID != null ?
-      Stack(
-                  children: <Widget>[
-                    _showContent(context),
-                    Selector<CartProvider, bool>(
-                      builder: (context, data, child) {
-                        return DesignConfiguration.showCircularProgress(
-                            data, colors.primary);
-                      },
-                      selector: (_, provider) => provider.isProgress,
-                    ),
-                  ],
-                )
-              // : Stack(
-              //     children: <Widget>[
-              //       _showContent1(context),
-              //       Selector<CartProvider, bool>(
-              //         builder: (context, data, child) {
-              //           return DesignConfiguration.showCircularProgress(
-              //               data, colors.primary);
-              //         },
-              //         selector: (_, provider) => provider.isProgress,
-              //       ),
-              //     ],
-              //   )
+          // CUR_USERID != null ?
+          Stack(
+              children: <Widget>[
+                _showContent(context),
+                Selector<CartProvider, bool>(
+                  builder: (context, data, child) {
+                    return DesignConfiguration.showCircularProgress(
+                        data, colors.primary);
+                  },
+                  selector: (_, provider) => provider.isProgress,
+                ),
+              ],
+            )
+          // : Stack(
+          //     children: <Widget>[
+          //       _showContent1(context),
+          //       Selector<CartProvider, bool>(
+          //         builder: (context, data, child) {
+          //           return DesignConfiguration.showCircularProgress(
+          //               data, colors.primary);
+          //         },
+          //         selector: (_, provider) => provider.isProgress,
+          //       ),
+          //     ],
+          //   )
           : NoInterNet(
               setStateNoInternate: setStateNoInternate,
               buttonSqueezeanimation: buttonSqueezeanimation,
@@ -770,8 +768,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                                       .read<CartProvider>()
                                       .saveLaterList
                                       .length,
-                                  physics:
-                                      const NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     return SaveLatterIteam(
                                       index: index,
@@ -868,22 +865,21 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
   _showContent(BuildContext context) {
     total = 0.0;
-    for(SectionModel cart in context
-        .read<CartProvider>()
-        .cartList){
-
+    for (SectionModel cart in context.read<CartProvider>().cartList) {
       int selectedPos = 0;
-      for (int i = 0;
-      i < cart.productList![0].prVarientList!.length;
-      i++) {
-        if (cart.varientId ==
-            cart.productList![0].prVarientList![i].id) selectedPos = i;
+      for (int i = 0; i < cart.productList![0].prVarientList!.length; i++) {
+        if (cart.varientId == cart.productList![0].prVarientList![i].id)
+          selectedPos = i;
       }
-      print(cart.productList![0].prVarientList![selectedPos]);
-      total += double.parse(cart.qty!) * double.parse(cart.productList![0].prVarientList![selectedPos].disPrice ?? "0");
+      double price = double.parse(
+          cart.productList![0].prVarientList![selectedPos].disPrice!);
+      if (price == 0) {
+        price = double.parse(
+            cart.productList![0].prVarientList![selectedPos].price!);
+      }
+      total += double.parse(cart.qty!) * price;
     }
 
-    print("------");
     print(total);
     return _isCartLoad
         ? const ShimmerEffect()
@@ -1175,50 +1171,55 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                       onBtnSelected: () async {
                         print("user id");
                         print(CUR_USERID);
-                        if(CUR_USERID != "" && CUR_USERID != null){
-                        if (context.read<CartProvider>().isPromoLen == false) {
-                          if (context.read<CartProvider>().oriPrice > 0) {
-                            FocusScope.of(context).unfocus();
-                            if (isAvailable) {
-                              print("This is available");
-                              print(context.read<CartProvider>().totalPrice);
-                              if (context.read<CartProvider>().totalPrice !=
-                                  0) {
-                                checkout();
+                        if (CUR_USERID != "" && CUR_USERID != null) {
+                          if (context.read<CartProvider>().isPromoLen ==
+                              false) {
+                            if (context.read<CartProvider>().oriPrice > 0) {
+                              FocusScope.of(context).unfocus();
+                              if (isAvailable) {
+                                print("This is available");
+                                print(context.read<CartProvider>().totalPrice);
+                                if (context.read<CartProvider>().totalPrice !=
+                                    0) {
+                                  checkout();
+                                }
+                              } else {
+                                setSnackbar(
+                                    getTranslated(
+                                        context, 'CART_OUT_OF_STOCK_MSG')!,
+                                    context);
                               }
+                              if (mounted) setState(() {});
                             } else {
                               setSnackbar(
-                                  getTranslated(
-                                      context, 'CART_OUT_OF_STOCK_MSG')!,
-                                  context);
+                                  getTranslated(context, 'ADD_ITEM')!, context);
                             }
-                            if (mounted) setState(() {});
                           } else {
-                            setSnackbar(
-                                getTranslated(context, 'ADD_ITEM')!, context);
+                            await context
+                                .read<PromoCodeProvider>()
+                                .validatePromocode(
+                                    check: false,
+                                    context: context,
+                                    promocode: context
+                                        .read<CartProvider>()
+                                        .promoC
+                                        .text,
+                                    update: setStateNow)
+                                .then(
+                              (value) {
+                                setState(
+                                  () {
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                );
+                              },
+                            );
                           }
                         } else {
-                          await context
-                              .read<PromoCodeProvider>()
-                              .validatePromocode(
-                                  check: false,
-                                  context: context,
-                                  promocode:
-                                      context.read<CartProvider>().promoC.text,
-                                  update: setStateNow)
-                              .then(
-                            (value) {
-                              setState(
-                                () {
-                                  FocusScope.of(context).unfocus();
-                                },
-                              );
-                            },
-                          );
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => const Login()));
                         }
-                      }else{
-                          Navigator.push(context, MaterialPageRoute(builder:(_)=>const Login()));
-                        }},
+                      },
                     ),
                   ],
                 ),
@@ -2908,10 +2909,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     setSnackbar(response.message!, context);
   }
 
-
   double total = 0.0;
-  cartItems(List<SectionModel> cartList) {
 
+  cartItems(List<SectionModel> cartList) {
     return ListView.builder(
       shrinkWrap: true,
       itemCount: cartList.length,
