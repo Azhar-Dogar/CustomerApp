@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:eshop_multivendor/Provider/CartProvider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -32,8 +33,9 @@ class StripeService {
   static init(String? stripeId, String? stripeMode) async {
     Stripe.publishableKey = stripeId ?? '';
     Stripe.merchantIdentifier = 'App Identifier';
+    if(!kIsWeb){
     await Stripe.instance.applySettings();
-  }
+  }}
 
   static Future<StripeTransactionResponse> payWithPaymentSheet({
     String? amount,

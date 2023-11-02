@@ -22,6 +22,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -55,10 +56,12 @@ import 'Provider/userWalletProvider.dart';
 import 'Provider/writeReviewProvider.dart';
 import 'Screen/Dashboard/Dashboard.dart';
 import 'firebase_options.dart';
-
+import 'package:path_provider/path_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  if (!kIsWeb){
+    final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);}
     await Firebase.initializeApp(
       // name: "customer_app",
       options: DefaultFirebaseOptions.currentPlatform,
@@ -73,7 +76,7 @@ void main() async {
   FirebaseMessaging.instance.getInitialMessage();
   // Initialize FFI
   databaseFactory = kIsWeb ? databaseFactoryFfiWeb : databaseFactoryFfi;
-  sqfliteFfiInit();
+  // sqfliteFfiInit();
   initializedDownload();
 
 

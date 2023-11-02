@@ -1174,7 +1174,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                         if (CUR_USERID != "" && CUR_USERID != null) {
                           if (context.read<CartProvider>().isPromoLen ==
                               false) {
-                            if (context.read<CartProvider>().oriPrice > 0) {
+                            if (context.read<CartProvider>().oriPrice > 0 || total > 0) {
                               FocusScope.of(context).unfocus();
                               if (isAvailable) {
                                 print("This is available");
@@ -2439,7 +2439,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           setSnackbar(error.toString(), context);
         },
       );
-    } on TimeoutException catch (_) {
+    } catch (_) {
       setSnackbar(getTranslated(context, 'somethingMSg')!, context);
     }
   }

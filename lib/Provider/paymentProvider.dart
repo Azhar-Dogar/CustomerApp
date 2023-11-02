@@ -64,7 +64,8 @@ class PaymentProvider extends ChangeNotifier {
         Map<String, dynamic> result =
             await PaymentRepository.getDataTimeSettings(parameter: parameter);
         bool error = result['error'];
-
+        print(result);
+        print("this is result");
         if (!error) {
           var data = result['data'];
           var timeSlot = data['time_slot_config'];
@@ -226,6 +227,8 @@ class PaymentProvider extends ChangeNotifier {
 
           print(
               'selectedmethod provider***${context.read<CartProvider>().selectedMethod}');
+          print(paymentMethodList.length);
+          print("payment methods");
           for (int i = 0; i < paymentMethodList.length; i++) {
             print(
                 'test i****${i == context.read<CartProvider>().selectedMethod}');

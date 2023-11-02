@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:eshop_multivendor/Provider/UserProvider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -46,17 +47,14 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     context.read<PaymentProvider>().payModel.clear();
-    context.read<PaymentProvider>().getdateTime(context, setStateNow);
-    context.read<PaymentProvider>().timeSlotList.length = 0;
-    context.read<PaymentProvider>().timeModel.clear();
-
     Future.delayed(
       Duration.zero,
-      () {
+          () {
         context.read<PaymentProvider>().paymentMethodList = [
+          !kIsWeb?
           Platform.isIOS
-              ? getTranslated(context, 'APPLEPAY')
-              : getTranslated(context, 'GPAY'),
+              ? getTranslated(context, 'APPLEPAY'):
+          getTranslated(context, 'GPAY'):getTranslated(context, 'GPAY'),
           getTranslated(context, 'COD_LBL'),
           getTranslated(context, 'PAYPAL_LBL'),
           getTranslated(context, 'PAYUMONEY_LBL'),
@@ -71,6 +69,11 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
         ];
       },
     );
+    context.read<PaymentProvider>().getdateTime(context, setStateNow);
+    context.read<PaymentProvider>().timeSlotList.length = 0;
+    context.read<PaymentProvider>().timeModel.clear();
+    print("here i getter");
+    print(context.read<PaymentProvider>().paymentMethodList.length);
     if (widget.msg != '') {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) => setSnackbar(
@@ -113,10 +116,11 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
       (_) async {
         isNetworkAvail = await isNetworkAvailable();
         if (isNetworkAvail) {
-          context.read<PaymentProvider>().getdateTime(
-                context,
-                setStateNow,
-              );
+          Provider.of<PaymentProvider>(context).getdateTime(context, setStateNow());
+          // context.read<PaymentProvider>().getdateTime(
+          //       context,
+          //       setStateNow,
+          //     );
         } else {
           await buttonController!.reverse();
           if (mounted) setState(() {});
@@ -206,6 +210,8 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
                                                               .read<
                                                                   CartProvider>()
                                                               .isPayLayShow = false;
+                                                          print(context.read<CartProvider>().isPayLayShow);
+                                                          print("here is test");
                                                         } else {
                                                           context
                                                               .read<
