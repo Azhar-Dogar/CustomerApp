@@ -696,164 +696,164 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     return;
   }
 
-  _showContent1(BuildContext context) {
-    List<SectionModel> cartList = context.read<CartProvider>().cartList;
-
-    return _isCartLoad || _isSaveLoad
-        ? const ShimmerEffect()
-        : cartList.isEmpty && context.read<CartProvider>().saveLaterList.isEmpty
-            ? const EmptyCart()
-            : Container(
-                color: Theme.of(context).colorScheme.lightWhite,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: RefreshIndicator(
-                        color: colors.primary,
-                        key: _refreshIndicatorKey,
-                        onRefresh: _refresh,
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          controller: _scrollControllerOnCartItems,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: cartList.length,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return CartListViewLayOut(
-                                    index: index,
-                                    setState: setStateNow,
-                                    saveForLatter: saveForLaterFun,
-                                  );
-                                },
-                              ),
-                              context
-                                      .read<CartProvider>()
-                                      .saveLaterList
-                                      .isNotEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        getTranslated(
-                                            context, 'SAVEFORLATER_BTN')!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .fontColor,
-                                              fontFamily: 'ubuntu',
-                                            ),
-                                      ),
-                                    )
-                                  : Container(
-                                      height: 0,
-                                    ),
-                              if (context
-                                  .read<CartProvider>()
-                                  .saveLaterList
-                                  .isNotEmpty)
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: context
-                                      .read<CartProvider>()
-                                      .saveLaterList
-                                      .length,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return SaveLatterIteam(
-                                      index: index,
-                                      setState: setStateNow,
-                                      cartFunc: cartFun,
-                                    );
-                                  },
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        context.read<CartProvider>().cartList.length != 0
-                            ? Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                  top: 5.0,
-                                  end: 10.0,
-                                  start: 10.0,
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.white,
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(circularBorderRadius5),
-                                    ),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 5,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            getTranslated(
-                                                context, 'TOTAL_PRICE')!,
-                                          ),
-                                          Text(
-                                            '${DesignConfiguration.getPriceFormat(context, context.read<CartProvider>().oriPrice)!}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .fontColor,
-                                                  fontFamily: 'ubuntu',
-                                                ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                height: 0,
-                              ),
-                      ],
-                    ),
-                    cartList.isNotEmpty
-                        ? SimBtn(
-                            size: 0.9,
-                            height: 40,
-                            borderRadius: circularBorderRadius5,
-                            title: getTranslated(context, 'PROCEED_CHECKOUT'),
-                            onBtnSelected: () async {
-                              Routes.navigateToLoginScreen(context);
-                            },
-                          )
-                        : Container(
-                            height: 0,
-                          ),
-                  ],
-                ),
-              );
-  }
+  // _showContent1(BuildContext context) {
+  //   List<SectionModel> cartList = context.read<CartProvider>().cartList;
+  //
+  //   return _isCartLoad || _isSaveLoad
+  //       ? const ShimmerEffect()
+  //       : cartList.isEmpty && context.read<CartProvider>().saveLaterList.isEmpty
+  //           ? const EmptyCart()
+  //           : Container(
+  //               color: Theme.of(context).colorScheme.lightWhite,
+  //               child: Column(
+  //                 mainAxisSize: MainAxisSize.min,
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: <Widget>[
+  //                   Padding(
+  //                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
+  //                     child: RefreshIndicator(
+  //                       color: colors.primary,
+  //                       key: _refreshIndicatorKey,
+  //                       onRefresh: _refresh,
+  //                       child: SingleChildScrollView(
+  //                         physics: const BouncingScrollPhysics(
+  //                             parent: AlwaysScrollableScrollPhysics()),
+  //                         controller: _scrollControllerOnCartItems,
+  //                         child: Column(
+  //                           mainAxisSize: MainAxisSize.min,
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             ListView.builder(
+  //                               shrinkWrap: true,
+  //                               itemCount: cartList.length,
+  //                               physics: const NeverScrollableScrollPhysics(),
+  //                               itemBuilder: (context, index) {
+  //                                 return CartListViewLayOut(
+  //                                   index: index,
+  //                                   setState: setStateNow,
+  //                                   saveForLatter: saveForLaterFun,
+  //                                 );
+  //                               },
+  //                             ),
+  //                             context
+  //                                     .read<CartProvider>()
+  //                                     .saveLaterList
+  //                                     .isNotEmpty
+  //                                 ? Padding(
+  //                                     padding: const EdgeInsets.all(8.0),
+  //                                     child: Text(
+  //                                       getTranslated(
+  //                                           context, 'SAVEFORLATER_BTN')!,
+  //                                       style: Theme.of(context)
+  //                                           .textTheme
+  //                                           .titleMedium!
+  //                                           .copyWith(
+  //                                             color: Theme.of(context)
+  //                                                 .colorScheme
+  //                                                 .fontColor,
+  //                                             fontFamily: 'ubuntu',
+  //                                           ),
+  //                                     ),
+  //                                   )
+  //                                 : Container(
+  //                                     height: 0,
+  //                                   ),
+  //                             if (context
+  //                                 .read<CartProvider>()
+  //                                 .saveLaterList
+  //                                 .isNotEmpty)
+  //                               ListView.builder(
+  //                                 shrinkWrap: true,
+  //                                 itemCount: context
+  //                                     .read<CartProvider>()
+  //                                     .saveLaterList
+  //                                     .length,
+  //                                 physics: const NeverScrollableScrollPhysics(),
+  //                                 itemBuilder: (context, index) {
+  //                                   return SaveLatterIteam(
+  //                                     index: index,
+  //                                     setState: setStateNow,
+  //                                     cartFunc: cartFun,
+  //                                   );
+  //                                 },
+  //                               ),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   Column(
+  //                     mainAxisSize: MainAxisSize.min,
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: <Widget>[
+  //                       context.read<CartProvider>().cartList.length != 0
+  //                           ? Padding(
+  //                               padding: const EdgeInsetsDirectional.only(
+  //                                 top: 5.0,
+  //                                 end: 10.0,
+  //                                 start: 10.0,
+  //                               ),
+  //                               child: Container(
+  //                                 decoration: BoxDecoration(
+  //                                   color: Theme.of(context).colorScheme.white,
+  //                                   borderRadius: const BorderRadius.all(
+  //                                     Radius.circular(circularBorderRadius5),
+  //                                   ),
+  //                                 ),
+  //                                 padding: const EdgeInsets.symmetric(
+  //                                   vertical: 10,
+  //                                   horizontal: 5,
+  //                                 ),
+  //                                 child: Column(
+  //                                   children: [
+  //                                     Row(
+  //                                       mainAxisAlignment:
+  //                                           MainAxisAlignment.spaceBetween,
+  //                                       children: [
+  //                                         Text(
+  //                                           getTranslated(
+  //                                               context, 'TOTAL_PRICE')!,
+  //                                         ),
+  //                                         Text(
+  //                                           '${DesignConfiguration.getPriceFormat(context, context.read<CartProvider>().oriPrice)!}',
+  //                                           style: Theme.of(context)
+  //                                               .textTheme
+  //                                               .titleMedium!
+  //                                               .copyWith(
+  //                                                 color: Theme.of(context)
+  //                                                     .colorScheme
+  //                                                     .fontColor,
+  //                                                 fontFamily: 'ubuntu',
+  //                                               ),
+  //                                         ),
+  //                                       ],
+  //                                     )
+  //                                   ],
+  //                                 ),
+  //                               ),
+  //                             )
+  //                           : Container(
+  //                               height: 0,
+  //                             ),
+  //                     ],
+  //                   ),
+  //                   cartList.isNotEmpty
+  //                       ? SimBtn(
+  //                           size: 0.9,
+  //                           height: 40,
+  //                           borderRadius: circularBorderRadius5,
+  //                           title: getTranslated(context, 'PROCEED_CHECKOUT'),
+  //                           onBtnSelected: () async {
+  //                             Routes.navigateToLoginScreen(context);
+  //                           },
+  //                         )
+  //                       : Container(
+  //                           height: 0,
+  //                         ),
+  //                 ],
+  //               ),
+  //             );
+  // }
 
   Future<void> promoEmpty() async {
     setState(() {
