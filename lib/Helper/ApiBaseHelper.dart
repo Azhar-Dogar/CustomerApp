@@ -21,15 +21,17 @@ class ApiBaseHelper {
     var responseJson;
     try {
       print(headers);
-      print("parameter");
-      print(param);
       print("this is header");
+      print(param);
+      print("parameter");
       final response =
           await post(url, body: param.isNotEmpty ? param : [], headers: headers)
               .timeout(const Duration(seconds: timeOut));
       print('response api****$url********$param*********${response.statusCode}');
-    
-      responseJson = _response(response);
+      print("here is api response");
+      print(response.body);
+      print(response.statusCode);
+      responseJson = await _response(response);
     } on SocketException {
       throw ApiException('No Internet connection');
     } on TimeoutException {
@@ -37,6 +39,8 @@ class ApiBaseHelper {
     } on Exception catch (e) {
       throw ApiException('Something Went wrong with ${e.toString()}');
     }
+    print(responseJson);
+    print("response is here");
     return responseJson;
   }
 

@@ -157,8 +157,13 @@ class StripeService {
 
       var response = await http.post(Uri.parse(StripeService.paymentApiUrl),
           body: parameter, headers: StripeService.headers);
+      print("response of stripe api");
+      print(response.statusCode);
+      print(response.body);
       return jsonDecode(response.body.toString());
-    } catch (err) {}
+    } catch (err) {
+      print("Error is here:$err");
+    }
     return null;
   }
 }

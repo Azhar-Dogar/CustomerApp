@@ -437,19 +437,15 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               _isCartLoad = false;
             });
           }
-          if (context
-                  .read<CartProvider>()
-                  .cartList[0]
-                  .productList![0]
-                  .productType !=
-              'digital_product') {
+          if(context.read<CartProvider>().cartList.isNotEmpty){
+          if (context.read<CartProvider>().cartList[0].productList![0].productType != 'digital_product') {
             _getAddress();
           } else {
             setState(() {
               _isLoading = false;
             });
           }
-        }, onError: (error) {
+        }}, onError: (error) {
           setSnackbar(error.toString(), context);
         });
       } on TimeoutException catch (_) {
@@ -2133,17 +2129,18 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
 
     try {
       apiBaseHelper.postAPICall(getPytmChecsumkApi, parameter).then(
-        (getdata) {
-          bool error = getdata['error'];
-
+        (getData) {
+          bool error = getData['error'];
+           print("get data");
+           print(getData);
           if (!error) {
-            String txnToken = getdata['txn_token'];
+            String txnToken = getData['txn_token'];
             setState(
               () {
                 paymentResponse = txnToken;
               },
             );
-
+            print("i am here");
             var paytmResponse = Paytm.payWithPaytm(
               callBackUrl: callBackUrl,
               mId: context.read<CartProvider>().paytmMerId!,
@@ -2184,7 +2181,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                         }
                       }
                     }
-
+                    print("error is here");
+                    print(paymentResponse);
                     setSnackbar(paymentResponse!, context);
                   },
                 );
@@ -2197,7 +2195,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               },
             );
             context.read<CartProvider>().setProgress(false);
-            setSnackbar(getdata['message'], context);
+            setSnackbar(getData['message'], context);
           }
         },
         onError: (error) {
@@ -2357,6 +2355,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
               paypalPayment(orderId);
             } else if (context.read<CartProvider>().payMethod ==
                 getTranslated(context, 'STRIPE_LBL')) {
+              print("I am Here");
               stripePayment(context.read<CartProvider>().stripePayId, orderId,
                   tranId == 'succeeded' ? PLACED : WAITING, msg, true);
             } else if (context.read<CartProvider>().payMethod ==
@@ -2873,11 +2872,18 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
         from: 'order',
         context: context,
         awaitedOrderId: orderID);
-
+     print("response status :${response.status}");
     if (response.message == 'Transaction successful') {
       await updateOrderStatus(orderID: orderId, status: PLACED);
       addTransaction(context.read<CartProvider>().stripePayId, orderID,
           tranId == 'succeeded' ? PLACED : WAITING, msg, true);
+      if (mounted) {
+        setState(
+              () {
+            context.read<CartProvider>().placeOrder = true;
+          },
+        );
+      }
     } else if (response.status == 'pending' || response.status == 'captured') {
       await updateOrderStatus(orderID: orderId, status: WAITING);
       addTransaction(
@@ -2946,6 +2952,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           (getdata) {
             bool error = getdata['error'];
             String? msg = getdata['message'];
+            print(error);
+            print(msg);
+            print("here is error message");
             if (!error) {
               var data = getdata['link'];
               Navigator.push(
@@ -2971,6 +2980,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                 },
               );
             } else {
+              print("error found");
               setSnackbar(msg!, context);
             }
 
