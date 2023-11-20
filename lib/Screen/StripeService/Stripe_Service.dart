@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:eshop_multivendor/Provider/CartProvider.dart';
+import 'package:eshop_multivendor/Screen/WebView/payment_method_web_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -160,6 +161,15 @@ class StripeService {
       print("response of stripe api");
       print(response.statusCode);
       print(response.body);
+      if(response.statusCode == 200){
+        var data = jsonDecode(response.body);
+        var url = data['client_secret'];
+      //   if(kIsWeb){
+      //   Navigator.push(context!, MaterialPageRoute(builder: (_)=>WebViewExample(url: "https://pay.stripe.com/payments/$url")));
+      //   print("https://pay.stripe.com/payments/$url");
+      //   print("url is here ");
+      // }
+      }
       return jsonDecode(response.body.toString());
     } catch (err) {
       print("Error is here:$err");

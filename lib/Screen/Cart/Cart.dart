@@ -9,6 +9,7 @@ import 'package:eshop_multivendor/Provider/UserProvider.dart';
 import 'package:eshop_multivendor/Screen/Auth/Login.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:http/http.dart';
@@ -21,6 +22,7 @@ import '../../Helper/String.dart';
 import '../../Model/Model.dart';
 import '../../repository/cartRepository.dart';
 import '../../widgets/snackbar.dart';
+import '../WebView/payment_method_web_view.dart';
 import '../Manage Address/Manage_Address.dart';
 import '../StripeService/Stripe_Service.dart';
 import '../../Helper/routes.dart';
@@ -2419,6 +2421,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
           String? msg = getdata['message'];
           if (!error) {
             String? data = getdata['data'];
+            if(kIsWeb){
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>WebViewExample(url: data,from: 'order',orderId: orderId,)));
+            }else{
             Navigator.push(
               context,
               CupertinoPageRoute(
@@ -2429,7 +2434,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                 ),
               ),
             );
-          } else {
+          } }else {
             setSnackbar(msg!, context);
           }
           context.read<CartProvider>().setProgress(false);
@@ -2728,119 +2733,128 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             if (!error) {
               var data = getdata['data'];
               String redirectUrl = data['redirect_url'];
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (BuildContext context) => MidTrashWebview(
-                    url: redirectUrl,
-                    from: 'order',
-                    orderId: orderID,
+               Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (BuildContext context) =>
+                        MidTrashWebview(
+                          url: redirectUrl,
+                          from: 'order',
+                          orderId: orderID,
+                        ),
                   ),
-                ),
-              ).then(
-                (value) async {
-                  isNetworkAvail = await isNetworkAvailable();
-                  if (isNetworkAvail) {
-                    try {
-                      context.read<CartProvider>().setProgress(true);
-                      var parameter = {
-                        ORDER_ID: orderID,
-                      };
-                      apiBaseHelper
-                          .postAPICall(
-                              getMidtransTransactionStatusApi, parameter)
-                          .then(
-                        (getdata) async {
-                          bool error = getdata['error'];
-                          String? msg = getdata['message'];
-                          var data = getdata['data'];
-                          if (!error) {
-                            String statuscode = data['status_code'];
+                ).then(
+                      (value) async {
+                    isNetworkAvail = await isNetworkAvailable();
+                    if (isNetworkAvail) {
+                      try {
+                        context.read<CartProvider>().setProgress(true);
+                        var parameter = {
+                          ORDER_ID: orderID,
+                        };
+                        apiBaseHelper
+                            .postAPICall(
+                            getMidtransTransactionStatusApi, parameter)
+                            .then(
+                              (getdata) async {
+                            bool error = getdata['error'];
+                            String? msg = getdata['message'];
+                            var data = getdata['data'];
+                            if (!error) {
+                              String statuscode = data['status_code'];
 
-                            if (statuscode == '404') {
-                              deleteOrder(orderId);
-                              if (mounted) {
-                                context.read<CartProvider>().checkoutState!(
-                                  () {
-                                    context.read<CartProvider>().placeOrder =
-                                        true;
-                                  },
-                                );
-                              }
-                              context.read<CartProvider>().setProgress(false);
-                            }
-
-                            if (statuscode == '200') {
-                              String transactionStatus =
-                                  data['transaction_status'];
-                              String transactionId = data['transaction_id'];
-                              if (transactionStatus == 'capture') {
-                                Map<String, dynamic> result =
-                                    await updateOrderStatus(
-                                        orderID: orderId, status: PLACED);
-                                if (!result['error']) {
-                                  await addTransaction(
-                                    transactionId,
-                                    orderId,
-                                    SUCCESS,
-                                    rozorpayMsg,
-                                    true,
-                                  );
-                                } else {
-                                  setSnackbar('${result['message']}', context);
-                                }
-                                if (mounted) {
-                                  context
-                                      .read<CartProvider>()
-                                      .setProgress(false);
-                                }
-                              } else {
+                              if (statuscode == '404') {
                                 deleteOrder(orderId);
                                 if (mounted) {
                                   context.read<CartProvider>().checkoutState!(
-                                    () {
-                                      context.read<CartProvider>().placeOrder =
-                                          true;
+                                        () {
+                                      context
+                                          .read<CartProvider>()
+                                          .placeOrder =
+                                      true;
                                     },
                                   );
                                 }
                                 context.read<CartProvider>().setProgress(false);
                               }
-                            }
-                          } else {
-                            setSnackbar(msg!, context);
-                          }
 
-                          context.read<CartProvider>().setProgress(false);
-                        },
-                        onError: (error) {
-                          setSnackbar(error.toString(), context);
-                        },
-                      );
-                    } on TimeoutException catch (_) {
-                      context.read<CartProvider>().setProgress(false);
-                      setSnackbar(
-                          getTranslated(context, 'somethingMSg')!, context);
+                              if (statuscode == '200') {
+                                String transactionStatus =
+                                data['transaction_status'];
+                                String transactionId = data['transaction_id'];
+                                if (transactionStatus == 'capture') {
+                                  Map<String, dynamic> result =
+                                  await updateOrderStatus(
+                                      orderID: orderId, status: PLACED);
+                                  if (!result['error']) {
+                                    await addTransaction(
+                                      transactionId,
+                                      orderId,
+                                      SUCCESS,
+                                      rozorpayMsg,
+                                      true,
+                                    );
+                                  } else {
+                                    setSnackbar(
+                                        '${result['message']}', context);
+                                  }
+                                  if (mounted) {
+                                    context
+                                        .read<CartProvider>()
+                                        .setProgress(false);
+                                  }
+                                } else {
+                                  deleteOrder(orderId);
+                                  if (mounted) {
+                                    context.read<CartProvider>().checkoutState!(
+                                          () {
+                                        context
+                                            .read<CartProvider>()
+                                            .placeOrder =
+                                        true;
+                                      },
+                                    );
+                                  }
+                                  context.read<CartProvider>().setProgress(
+                                      false);
+                                }
+                              }
+                            } else {
+                              setSnackbar(msg!, context);
+                            }
+
+                            context.read<CartProvider>().setProgress(false);
+                          },
+                          onError: (error) {
+                            setSnackbar(error.toString(), context);
+                          },
+                        );
+                      } on TimeoutException catch (_) {
+                        context.read<CartProvider>().setProgress(false);
+                        setSnackbar(
+                            getTranslated(context, 'somethingMSg')!, context);
+                      }
+                    } else {
+                      if (mounted) {
+                        context.read<CartProvider>().checkoutState!(
+                              () {
+                            isNetworkAvail = false;
+                          },
+                        );
+                      }
                     }
-                  } else {
-                    if (mounted) {
+                    if (value == 'true') {
                       context.read<CartProvider>().checkoutState!(
-                        () {
-                          isNetworkAvail = false;
+                            () {
+                          context
+                              .read<CartProvider>()
+                              .placeOrder = true;
                         },
                       );
-                    }
-                  }
-                  if (value == 'true') {
-                    context.read<CartProvider>().checkoutState!(
-                      () {
-                        context.read<CartProvider>().placeOrder = true;
-                      },
-                    );
-                  } else {}
-                },
-              );
-            } else {
+                    } else {}
+                  },
+                );
+              } else {
               setSnackbar(msg!, context);
             }
             context.read<CartProvider>().setProgress(false);
@@ -2957,6 +2971,9 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
             print("here is error message");
             if (!error) {
               var data = getdata['link'];
+              if(kIsWeb){
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>WebViewExample(url: data,)));
+              }else{
               Navigator.push(
                 context,
                 CupertinoPageRoute(
@@ -2978,7 +2995,7 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
                     deleteOrder(orderID);
                   }
                 },
-              );
+              );}
             } else {
               print("error found");
               setSnackbar(msg!, context);
